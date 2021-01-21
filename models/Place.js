@@ -11,16 +11,20 @@ Place.init(
       primaryKey: true,
       autoIncrement: true
     },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    place_name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     latitude: {
       type: DataTypes.DECIMAL,
       allowNull: false
     },
     longitude: {
       type: DataTypes.DECIMAL,
-      allowNull: false
-    },
-    city: {
-      type: DataTypes.STRING,
       allowNull: false
     }
   },

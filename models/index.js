@@ -59,6 +59,7 @@ Post.hasMany(Comment, {
   foreignKey: 'post_id'
 })
 
+// Place associations
 Place.hasMany(Post, {
   foreignKey: 'place_id'
 })
@@ -67,4 +68,4 @@ Post.belongsTo(Place, {
   foreignKey: 'place_id'
 })
 
-module.exports = { User, Post, Vote, Comment };
+module.exports = { User, Post, Vote, Comment, Place };
