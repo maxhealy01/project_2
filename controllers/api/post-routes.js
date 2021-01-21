@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
 	Post.findAll({
 		attributes: [
 			"id",
-			"post_url",
+			"post_content",
 			"title",
 			"created_at",
 			[
@@ -31,10 +31,10 @@ router.get("/", (req, res) => {
 				model: User,
 				attributes: ["username"],
 			},
-      {
-        model: Place,
-        attributes: ["city", "place_name"]
-      }
+			{
+				model: Place,
+				attributes: ["city", "place_name", "latitude", "longitude"],
+			},
 		],
 	})
 		.then((dbPostData) => res.json(dbPostData))
@@ -51,7 +51,7 @@ router.get("/:id", (req, res) => {
 		},
 		attributes: [
 			"id",
-			"post_url",
+			"post_content",
 			"title",
 			"created_at",
 			[
@@ -74,10 +74,10 @@ router.get("/:id", (req, res) => {
 				model: User,
 				attributes: ["username"],
 			},
-      {
-        model: Place,
-        attributes: ["city", "place_name"]
-      },
+			{
+				model: Place,
+				attributes: ["city", "place_name", "latitude", "longitude"],
+			},
 		],
 	})
 		.then((dbPostData) => {
@@ -96,8 +96,9 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
 	Post.create({
 		title: req.body.title,
-		post_url: req.body.post_url,
+		post_content: req.body.post_content,
 		user_id: req.session.user_id,
+		place_id: req.body.place_id,
 	})
 		.then((dbPostData) => res.json(dbPostData))
 		.catch((err) => {
