@@ -28,7 +28,7 @@ let addPost = () => {
 
 	submitBtn.addEventListener("click", (event) => {
 		event.preventDefault();
-		getPlace();
+		submitPost();
 	});
 
 	// Attach the new post div to the post area element
@@ -36,7 +36,7 @@ let addPost = () => {
 };
 
 // This function retrieves information from the Google Maps API in order to put it into the Place table in the database
-function getPlace() {
+function submitPost() {
 	if ("geolocation" in navigator) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -49,7 +49,7 @@ function getPlace() {
 					.then((res) => {
 						let city = res.results[0].address_components[3].long_name;
 						let address = res.results[0].formatted_address;
-
+						// Add the location to the places table
 						fetch(`/api/places`, {
 							method: "POST",
 							body: JSON.stringify({
@@ -61,20 +61,29 @@ function getPlace() {
 							headers: {
 								"Content-Type": "application/json",
 							},
-						}).then((response) => {
-							console.log(sessionStorage.getItem("id"));
-							response.json();
-						});
-						// .then((res) => {
-						// 	fetch(`/api/posts`, {
-						//     method: "POST",
-						//     body: JSON.stringify({
-						//       title: titleDiv.value.trim(),
-						//       post_content: body.value.trim(),
-
-						//     })
-						//   });
-						// });
+						})
+							.then((response) => response.json())
+							// Add the post to the database
+							.then((res) => {
+								let title = document.getElementById("title").value.trim();
+								let post_content = document.getElementById("body").value.trim();
+								let user_id = sessionStorage.getItem("id");
+								let place_id = res.id;
+								console.log(title, post_content, user_id, place_id);
+								fetch(`/api/posts`, {
+									method: "POST",
+									body: JSON.stringify({
+										title,
+										post_content,
+										user_id,
+										place_id,
+									}),
+									headers: {
+										"Content-Type": "application/json",
+									},
+								});
+							})
+							.then(() => document.location.reload());
 					});
 
 				// if (response.ok) {
@@ -88,21 +97,6 @@ function getPlace() {
 	} else {
 		console.log("Not Supported");
 	}
-}
-
-let createPlace = () => {
-	getPlace().then((response) => {
-		console.log(response);
-	});
-};
-
-function submitPost(event) {
-	event.preventDefault();
-
-	let title = document.getElementById("title").value;
-	let post_content = document.getElementById("body").value;
-
-	console.log(title, post_content);
 }
 
 addPostBtn.addEventListener("click", (event) => {
