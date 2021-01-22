@@ -8,10 +8,16 @@ router.get("/", (req, res) => {
 			{
 				model: Post,
 				attributes: ["id", "title", "post_content", "user_id", "created_at"],
-				include: {
-					model: User,
-					attributes: ["username"],
-				},
+				include: [
+					{
+						model: User,
+						attributes: ["username"],
+					},
+					{
+						model: Comment,
+						attributes: ["comment_text"],
+					},
+				],
 			},
 		],
 	})
@@ -32,10 +38,16 @@ router.get("/:id", (req, res) => {
 			{
 				model: Post,
 				attributes: ["id", "title", "post_content", "user_id", "created_at"],
-				include: {
-					model: User,
-					attributes: ["username"],
-				},
+				include: [
+					{
+						model: User,
+						attributes: ["username"],
+					},
+					{
+						model: Comment,
+						attributes: ["comment_text"],
+					},
+				],
 			},
 		],
 	})

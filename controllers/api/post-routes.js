@@ -107,9 +107,7 @@ router.post("/", (req, res) => {
 		});
 });
 
-// PUT /api/posts/upvote
 router.put("/upvote", (req, res) => {
-	// custom static method created in models/Post-js
 	if (req.session) {
 		Post.upvote(
 			{ ...req.body, user_id: req.session.user_id },
