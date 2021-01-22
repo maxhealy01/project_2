@@ -121,11 +121,22 @@ function openMessage(event) {
 
 let sendMessage = (received_username, sent_id) => {
 	let message = document.getElementById("message").value.trim();
-
+	sent_id = sent_id.toString();
 	const response = fetch(`/api/users/name/${received_username}`)
 		.then((response) => response.json())
 		.then((res) => {
 			received_id = res.id;
-			console.log(received_id);
+			// Send the message to the database
+			fetch(`/api/messages`, {
+				method: "POST",
+				body: JSON.stringify({
+					sent_id,
+					received_id,
+					message,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 		});
 };
