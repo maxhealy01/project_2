@@ -1,18 +1,50 @@
 const router = require("express").Router();
 const { User, Post, Vote, Place, Message } = require("../../models");
+const { encrypt, decrypt } = require("../../utils/crypto");
 
-router.get("/:id", (req, res) => {
+// This endpoint retrieves all the messages that a user has received
+router.get("/received/:id", (req, res) => {
 	Message.findAll({
 		where: {
 			received_id: req.params.id,
 		},
 	})
-		.then((dbUserData) => {
-			if (!dbUserData) {
+		.then((messages) => {
+			if (!messages) {
 				res.status(404).json({ message: "No user found with this id" });
 				return;
 			}
-			res.json(dbUserData);
+
+			for (i = 0; i < messages.length; i++) {
+				message = decrypt(JSON.parse(messages[i].message));
+				messages[i].message = message;
+			}
+
+			res.json(messages);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json(err);
+		});
+});
+
+// This endpoint retrieves all the messages that a user has sent
+router.get("/sent/:id", (req, res) => {
+	Message.findAll({
+		where: {
+			sent_id: req.params.id,
+		},
+	})
+		.then((messages) => {
+			if (!messages) {
+				res.status(404).json({ message: "No user found with this id" });
+				return;
+			}
+			for (i = 0; i < messages.length; i++) {
+				message = decrypt(JSON.parse(messages[i].message));
+				messages[i].message = message;
+			}
+			res.json(messages);
 		})
 		.catch((err) => {
 			console.log(err);
@@ -21,10 +53,11 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+	let encryptedMessage = JSON.stringify(encrypt(req.body.message));
 	Message.create({
 		sent_id: req.body.sent_id,
 		received_id: req.body.received_id,
-		message: req.body.message,
+		message: encryptedMessage,
 	})
 		.then((dbMessageData) => res.json(dbMessageData))
 		.catch((err) => {

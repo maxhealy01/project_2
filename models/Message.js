@@ -30,7 +30,7 @@ Message.init(
 			},
 		},
 		message: {
-			type: DataTypes.STRING,
+			type: DataTypes.JSON,
 			allowNull: false,
 		},
 	},

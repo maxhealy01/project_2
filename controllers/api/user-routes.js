@@ -51,6 +51,27 @@ router.get("/:id", (req, res) => {
 		});
 });
 
+// GET /api/users/username
+router.get("/name/:username", (req, res) => {
+	User.findOne({
+		attributes: { exclude: ["password"] },
+		where: {
+			username: req.params.username,
+		},
+	})
+		.then((dbUserData) => {
+			if (!dbUserData) {
+				res.status(404).json({ message: "No user found with this username" });
+				return;
+			}
+			res.json(dbUserData);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json(err);
+		});
+});
+
 // POST
 router.post("/", (req, res) => {
 	User.create({

@@ -64,11 +64,13 @@ function initMap() {
 							)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
 							// Create an info window for each marker
 							let infoWindow = new google.maps.InfoWindow({
-								content: `<h3>${markers[i].posts[0].title}</h3>
-                          <h5>${time}</h5>
+								content: `<h3>${markers[i].posts[0].title}</h3>                         
                           <p>${markers[i].posts[0].post_content}</p>
-                          `,
+													<h5 id="time">${time}
+													<button type="submit" onclick="openMessage(event)">Message This User</button>
+                          </h5>`,
 							});
+
 							// Make the info window clickable
 							marker.addListener("click", function () {
 								infoWindow.open(map, marker);
@@ -84,3 +86,46 @@ function initMap() {
 		console.log("Not Supported");
 	}
 }
+
+function openMessage(event) {
+	// Parse the window object to get to the poster's username
+	let button = event.target;
+	let windowDiv = button.closest("#time");
+	let received_username = windowDiv.innerHTML.split(" ")[2];
+	let sent_id = sessionStorage.getItem("id");
+
+	windowDiv.removeChild(button);
+	// Add a div for the input DOM element and the Send Button
+	let newMessage = document.createElement("div");
+	newMessage.id = "newMessage";
+
+	// Create a title input area
+	let messageEl = document.createElement("input");
+	messageEl.id = "message";
+	messageEl.setAttribute("type", "text");
+	newMessage.appendChild(messageEl);
+
+	// Create a button for submission
+	let sendBtn = document.createElement("button");
+	sendBtn.setAttribute("type", "submit");
+	sendBtn.textContent = "Send Message";
+	newMessage.appendChild(sendBtn);
+
+	windowDiv.appendChild(newMessage);
+
+	sendBtn.addEventListener("click", (event) => {
+		event.preventDefault();
+		sendMessage(received_username, sent_id);
+	});
+}
+
+let sendMessage = (received_username, sent_id) => {
+	let message = document.getElementById("message").value.trim();
+
+	const response = fetch(`/api/users/name/${received_username}`)
+		.then((response) => response.json())
+		.then((res) => {
+			received_id = res.id;
+			console.log(received_id);
+		});
+};
