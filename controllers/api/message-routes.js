@@ -66,4 +66,21 @@ router.post("/", (req, res) => {
 		});
 });
 
+// This will update the messages to *read* status when the user has read them
+router.put("/:id", (req, res) => {
+	Message.update(
+		{
+			read: true,
+		},
+		{ where: { received_id: req.params.id } }
+	)
+		.then((messages) => {
+			res.json(messages);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(500).json(err);
+		});
+});
+
 module.exports = router;

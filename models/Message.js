@@ -33,6 +33,10 @@ Message.init(
 			type: DataTypes.JSON,
 			allowNull: false,
 		},
+		read: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
 	},
 	{
 		sequelize,
