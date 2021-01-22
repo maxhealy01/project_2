@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post, User, Vote, Comment, Place } = require("../../models");
+const { Post, User, Vote, Place } = require("../../models");
 const sequelize = require("../../config/connection");
 
 router.get("/", (req, res) => {
@@ -19,14 +19,6 @@ router.get("/", (req, res) => {
 		],
 		order: [["created_at", "DESC"]],
 		include: [
-			{
-				model: Comment,
-				attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-				include: {
-					model: User,
-					attributes: ["username"],
-				},
-			},
 			{
 				model: User,
 				attributes: ["username"],
@@ -62,14 +54,6 @@ router.get("/:id", (req, res) => {
 			],
 		],
 		include: [
-			{
-				model: Comment,
-				attributes: ["id", "comment_text", "post_id", "user_id", "created_at"],
-				include: {
-					model: User,
-					attributes: ["username"],
-				},
-			},
 			{
 				model: User,
 				attributes: ["username"],
@@ -109,10 +93,7 @@ router.post("/", (req, res) => {
 
 router.put("/upvote", (req, res) => {
 	if (req.session) {
-		Post.upvote(
-			{ ...req.body, user_id: req.session.user_id },
-			{ Vote, Comment, User }
-		)
+		Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, User })
 			.then((updatedVoteData) => res.json(updatedVoteData))
 			.catch((err) => {
 				console.log(err);

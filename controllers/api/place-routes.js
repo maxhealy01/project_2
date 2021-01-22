@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Post, Vote, Comment, Place } = require("../../models");
+const { User, Post, Vote, Place } = require("../../models");
 
 router.get("/", (req, res) => {
 	Place.findAll({
@@ -12,10 +12,6 @@ router.get("/", (req, res) => {
 					{
 						model: User,
 						attributes: ["username"],
-					},
-					{
-						model: Comment,
-						attributes: ["comment_text"],
 					},
 				],
 			},
@@ -42,10 +38,6 @@ router.get("/:id", (req, res) => {
 					{
 						model: User,
 						attributes: ["username"],
-					},
-					{
-						model: Comment,
-						attributes: ["comment_text"],
 					},
 				],
 			},
