@@ -66,4 +66,4 @@ User.hasMany(Message, {
 	as: "sent_id",
 });
 
-module.exports = { User, Post, Vote, Place };
+module.exports = { User, Post, Vote, Place, Message };

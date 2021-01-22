@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const { Post, User, Comment, Vote, Place } = require("../models");
+const { Post, User, Vote, Place } = require("../models");
 
 router.get("/map", (req, res) => {
 	Place.findAll({
@@ -13,10 +13,6 @@ router.get("/map", (req, res) => {
 					{
 						model: User,
 						attributes: ["username"],
-					},
-					{
-						model: Comment,
-						attributes: ["comment_text"],
 					},
 				],
 			},

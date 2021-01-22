@@ -29,6 +29,10 @@ Message.init(
 				key: "id",
 			},
 		},
+		message: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 	},
 	{
 		sequelize,
