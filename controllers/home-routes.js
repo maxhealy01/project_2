@@ -4,7 +4,7 @@ const { Post, User, Comment, Vote, Place } = require("../models");
 
 router.get("/map", (req, res) => {
 	Place.findAll({
-		attributes: ["id", "city", "place_name", "latitude", "longitude"],
+		attributes: ["id", "city", "address", "latitude", "longitude"],
 		include: [
 			{
 				model: Post,

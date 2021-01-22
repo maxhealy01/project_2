@@ -15,7 +15,7 @@ Place.init(
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
-		place_name: {
+		address: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},

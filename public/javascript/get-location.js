@@ -1,6 +1,4 @@
-if (!markers) {
-	let markers = [];
-}
+let markers = [];
 
 let getLocation = () => {
 	if ("geolocation" in navigator) {

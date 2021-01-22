@@ -17,7 +17,7 @@ async function signupFormHandler(event) {
 		});
 
 		if (response.ok) {
-			res.redirect("/map");
+			document.location.replace("/map");
 		} else {
 			alert(response.statusText);
 		}
@@ -41,7 +41,9 @@ async function loginFormHandler(event) {
 		});
 
 		if (response.ok) {
-			document.location.replace("/dashboard");
+			let user = await response.json();
+			sessionStorage.setItem("id", user.user.id);
+			document.location.replace("/map");
 		} else {
 			alert(response.statusText);
 		}

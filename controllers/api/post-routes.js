@@ -33,7 +33,7 @@ router.get("/", (req, res) => {
 			},
 			{
 				model: Place,
-				attributes: ["city", "place_name", "latitude", "longitude"],
+				attributes: ["city", "address", "latitude", "longitude"],
 			},
 		],
 	})
@@ -76,7 +76,7 @@ router.get("/:id", (req, res) => {
 			},
 			{
 				model: Place,
-				attributes: ["city", "place_name", "latitude", "longitude"],
+				attributes: ["city", "address", "latitude", "longitude"],
 			},
 		],
 	})

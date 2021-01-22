@@ -27,7 +27,7 @@ router.get("/:id", (req, res) => {
 				attributes: ["id", "title", "post_content", "created_at"],
 				include: {
 					model: Place,
-					attributes: ["city", "place_name"],
+					attributes: ["city", "address"],
 				},
 			},
 			{

@@ -3,7 +3,7 @@ const { User, Post, Vote, Comment, Place } = require("../../models");
 
 router.get("/", (req, res) => {
 	Place.findAll({
-		attributes: ["id", "city", "place_name", "latitude", "longitude"],
+		attributes: ["id", "city", "address", "latitude", "longitude"],
 		include: [
 			{
 				model: Post,
@@ -33,7 +33,7 @@ router.get("/:id", (req, res) => {
 		where: {
 			id: req.params.id,
 		},
-		attributes: ["id", "city", "place_name", "latitude", "longitude"],
+		attributes: ["id", "city", "address", "latitude", "longitude"],
 		include: [
 			{
 				model: Post,
@@ -67,7 +67,7 @@ router.get("/:id", (req, res) => {
 router.post("/", (req, res) => {
 	Place.create({
 		city: req.body.city,
-		place_name: req.body.place_name,
+		address: req.body.address,
 		latitude: req.body.latitude,
 		longitude: req.body.longitude,
 	})
