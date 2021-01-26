@@ -23,10 +23,6 @@ router.get("/", (req, res) => {
 				model: User,
 				attributes: ["username"],
 			},
-			{
-				model: Place,
-				attributes: ["city", "address", "latitude", "longitude"],
-			},
 		],
 	})
 		.then((dbPostData) => res.json(dbPostData))
@@ -82,7 +78,8 @@ router.post("/", (req, res) => {
 		title: req.body.title,
 		post_content: req.body.post_content,
 		user_id: req.session.user_id,
-		place_id: req.body.place_id,
+		latitude: req.body.latitude,
+		longitude: req.body.longitude,
 	})
 		.then((dbPostData) => res.json(dbPostData))
 		.catch((err) => {

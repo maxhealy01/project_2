@@ -18,6 +18,7 @@ let getLocation = () => {
 };
 
 function initMap() {
+	console.log("Ayy");
 	if ("geolocation" in navigator) {
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
@@ -37,46 +38,56 @@ function initMap() {
 					},
 					map: map,
 				});
-				const response = fetch("/api/places")
+				console.log("Yo");
+				const response = fetch(`/api/posts`, {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
 					.then((response) => response.json())
 					.then((res) => {
 						let markers = res;
-						// Create a marker for each place in the DB
-						for (i = 0; i < markers.length; i++) {
-							let latitude = Number(markers[i].latitude);
-							let longitude = Number(markers[i].longitude);
-							let marker = new google.maps.Marker({
-								position: {
-									lat: latitude,
-									lng: longitude,
-								},
-								map: map,
-							});
-							// Format the created_at date
-							console.log(markers[0].posts[0].created_at);
-							let date = new Date(markers[i].posts[0].created_at);
-							let dateString = date.toString();
-							let time = `Posted by ${
-								markers[i].posts[0].user.username
-							} on ${dateString.slice(
-								4,
-								7
-							)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
-							// Create an info window for each marker
-							let infoWindow = new google.maps.InfoWindow({
-								content: `<h3>${markers[i].posts[0].title}</h3>                         
-                          <p>${markers[i].posts[0].post_content}</p>
-													<h5 id="time">${time}
-													<button type="submit" onclick="openMessage(event)">Message This User</button>
-                          </h5>`,
-							});
-
-							// Make the info window clickable
-							marker.addListener("click", function () {
-								infoWindow.open(map, marker);
-							});
-						}
+						console.log(markers);
 					});
+				// .then((res) => {
+				// 	let markers = res;
+				// 	// Create a marker for each place in the DB
+				// 	for (i = 0; i < markers.length; i++) {
+				// 		let latitude = Number(markers[i].latitude);
+				// 		let longitude = Number(markers[i].longitude);
+				// 		let marker = new google.maps.Marker({
+				// 			position: {
+				// 				lat: latitude,
+				// 				lng: longitude,
+				// 			},
+				// 			map: map,
+				// 		});
+				// 		// Format the created_at date
+				// 		console.log(markers[i].posts[0].created_at);
+				// 		let date = new Date(markers[i].posts[0].created_at);
+				// 		let dateString = date.toString();
+				// 		let time = `Posted by ${
+				// 			markers[i].posts[0].user.username
+				// 		} on ${dateString.slice(
+				// 			4,
+				// 			7
+				// 		)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
+				// 		// Create an info window for each marker
+				// 		let infoWindow = new google.maps.InfoWindow({
+				// 			content: `<h3>${markers[i].posts[0].title}</h3>
+				//                 <p>${markers[i].posts[0].post_content}</p>
+				// 								<h5 id="time">${time}
+				// 								<button type="submit" onclick="openMessage(event)">Message This User</button>
+				//                 </h5>`,
+				// 		});
+
+				// 		// Make the info window clickable
+				// 		marker.addListener("click", function () {
+				// 			infoWindow.open(map, marker);
+				// 		});
+				// 	}
+				// });
 			},
 			(error) => {
 				console.log(error.code);
@@ -121,7 +132,6 @@ function openMessage(event) {
 
 let sendMessage = (received_username, sent_id) => {
 	let message = document.getElementById("message").value.trim();
-	sent_id = sent_id.toString();
 	const response = fetch(`/api/users/name/${received_username}`)
 		.then((response) => response.json())
 		.then((res) => {

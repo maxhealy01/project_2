@@ -5,6 +5,7 @@ async function logout() {
 	});
 
 	if (response.ok) {
+		sessionStorage.clear();
 		document.location.replace("/map");
 	} else {
 		alert(response.statusText);

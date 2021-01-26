@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const sequelize = require("../config/connection");
-const { Post, User, Vote, Place } = require("../models");
+const { Post, User, Vote, Place, Message } = require("../models");
+const Sequelize = require("sequelize");
 
+router.get("/", (req, res) => {
+	res.render("homepage");
+});
 router.get("/map", (req, res) => {
 	Place.findAll({
 		attributes: ["id", "city", "address", "latitude", "longitude"],
@@ -38,6 +42,10 @@ router.get("/login", (req, res) => {
 	}
 
 	res.render("login");
+});
+
+router.get("/inbox", (req, res) => {
+	res.render("inbox", { loggedIn: req.session.loggedIn });
 });
 
 module.exports = router;
