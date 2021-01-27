@@ -18,7 +18,6 @@ async function signupFormHandler(event) {
 
 		if (response.ok) {
 			let user = await response.json();
-			console.log(user);
 			sessionStorage.setItem("id", user.id);
 			document.location.replace("/map");
 		} else {

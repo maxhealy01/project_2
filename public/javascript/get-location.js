@@ -1,16 +1,16 @@
 let markers = [];
-let latitude = 30.2729;
-let longitude = 97.7444;
+let latitude = sessionStorage.getItem("latitude");
+let longitude = sessionStorage.getItem("longitude");
 
 let getMap = (position) => {
 	console.log(position);
 	latitude = position.coords.latitude;
 	longitude = position.coords.longitude;
 	var options = {
+		enableHighAccuracy: true,
 		center: { lat: latitude, lng: longitude },
 		zoom: 16,
 	};
-	console.log(options);
 	map = new google.maps.Map(document.getElementById("map"), options);
 
 	let marker = new google.maps.Marker({
