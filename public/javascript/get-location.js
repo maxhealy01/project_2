@@ -1,22 +1,44 @@
 let markers = [];
-let latitude = 0;
-let longitude = 0;
+let latitude = 30.2729;
+let longitude = 97.7444;
 
-function initMap() {
-	if ("geolocation" in navigator) {
-		console.log("line 6");
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				console.log(position);
-				latitude = position.coords.latitude;
-				longitude = position.coords.longitude;
-				var options = {
-					center: { lat: latitude, lng: longitude },
-					zoom: 16,
-				};
-				console.log(options);
-				map = new google.maps.Map(document.getElementById("map"), options);
+let getMap = (position) => {
+	console.log(position);
+	latitude = position.coords.latitude;
+	longitude = position.coords.longitude;
+	var options = {
+		center: { lat: latitude, lng: longitude },
+		zoom: 16,
+	};
+	console.log(options);
+	map = new google.maps.Map(document.getElementById("map"), options);
 
+	let marker = new google.maps.Marker({
+		position: {
+			lat: latitude,
+			lng: longitude,
+		},
+		map: map,
+	});
+	console.log("Yo");
+	const response = fetch(`/api/posts`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	})
+		.then((response) => response.json())
+		// .then((res) => {
+		// 	let markers = res;
+		// 	console.log(markers);
+		// })
+		.then((res) => {
+			let markers = res;
+			console.log(markers);
+			// Create a marker for each place in the DB
+			for (i = 0; i < markers.length; i++) {
+				latitude = Number(markers[i].place.latitude);
+				longitude = Number(markers[i].place.longitude);
 				let marker = new google.maps.Marker({
 					position: {
 						lat: latitude,
@@ -24,61 +46,56 @@ function initMap() {
 					},
 					map: map,
 				});
-				console.log("Yo");
-				const response = fetch(`/api/posts`, {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-					},
-				})
-					.then((response) => response.json())
-					.then((res) => {
-						let markers = res;
-						console.log(markers);
-					});
-				// .then((res) => {
-				// 	let markers = res;
-				// 	// Create a marker for each place in the DB
-				// 	for (i = 0; i < markers.length; i++) {
-				// 		let latitude = Number(markers[i].latitude);
-				// 		let longitude = Number(markers[i].longitude);
-				// 		let marker = new google.maps.Marker({
-				// 			position: {
-				// 				lat: latitude,
-				// 				lng: longitude,
-				// 			},
-				// 			map: map,
-				// 		});
-				// 		// Format the created_at date
-				// 		console.log(markers[i].posts[0].created_at);
-				// 		let date = new Date(markers[i].posts[0].created_at);
-				// 		let dateString = date.toString();
-				// 		let time = `Posted by ${
-				// 			markers[i].posts[0].user.username
-				// 		} on ${dateString.slice(
-				// 			4,
-				// 			7
-				// 		)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
-				// 		// Create an info window for each marker
-				// 		let infoWindow = new google.maps.InfoWindow({
-				// 			content: `<h3>${markers[i].posts[0].title}</h3>
-				//                 <p>${markers[i].posts[0].post_content}</p>
-				// 								<h5 id="time">${time}
-				// 								<button type="submit" onclick="openMessage(event)">Message This User</button>
-				//                 </h5>`,
-				// 		});
+				// Format the created_at date
+				console.log(markers[i]);
+				let date = new Date(markers[i].created_at);
+				let dateString = date.toString();
+				let time = `Posted by ${markers[i].user.username} on ${dateString.slice(
+					4,
+					7
+				)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
+				// Create an info window for each marker
+				let infoWindow = new google.maps.InfoWindow({
+					content: `<h3>${markers[i].title}</h3>
+	                <p>${markers[i].post_content}</p>
+									<h5 id="time">${time}
+									<button type="submit" onclick="openMessage(event)">Message This User</button>
+	                </h5>`,
+				});
+				console.log(
+					"title",
+					markers[i].title,
+					"content",
+					markers[i].post_content,
+					"time",
+					time
+				);
+				console.log("info window created");
 
-				// 		// Make the info window clickable
-				// 		marker.addListener("click", function () {
-				// 			infoWindow.open(map, marker);
-				// 		});
-				// 	}
-				// });
-			},
+				// Make the info window clickable
+				marker.addListener("click", function () {
+					infoWindow.open(map, marker);
+				});
+			}
+		});
+};
+
+function initMap() {
+	if ("geolocation" in navigator) {
+		console.log("line 6");
+		navigator.geolocation.getCurrentPosition(
+			getMap,
 			(error) => {
+				let position = {
+					coords: {
+						latitude: latitude,
+						longitude: longitude,
+					},
+				};
+				getMap(position);
 				console.log(error.code);
 			},
-			{ timeout: 5000 }
+			{ timeout: 3000 }
 		);
 	} else {
 		console.log("Not Supported");
