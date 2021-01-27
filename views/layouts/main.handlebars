@@ -6,18 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Here and Now</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <script>
-    function getGeoLocation() {
-      navigator.geolocation.getCurrentPosition(setSessionCoords);
-    }
 
-    function setSessionCoords(position) {
-      sessionStorage.setItem("coords", position.coords)
-      sessionStorage.setItem("latitude", position.coords.latitude)
-      sessionStorage.setItem("longitude", position.coords.longitude)
-    }
-
-    window.onload = getGeoLocation()
+  <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-yWrlY4NA89Bb737Cfad_neoCwGciu2c&callback=initMap">
   </script>
 </head>
 

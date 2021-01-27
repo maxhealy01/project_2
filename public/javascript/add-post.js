@@ -39,72 +39,59 @@ let addPost = () => {
 // This function retrieves information from the Google Maps API in order to put it into the Place table in the database
 function submitPost() {
 	console.log("submit");
-	if ("geolocation" in navigator) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				let latitude = position.coords.latitude;
-				let longitude = position.coords.longitude;
-				console.log(latitude, longitude);
+	console.log(latitude, longitude);
 
-				fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA-yWrlY4NA89Bb737Cfad_neoCwGciu2c
+	fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyA-yWrlY4NA89Bb737Cfad_neoCwGciu2c
         `)
-					.then((response) => response.json())
-					.then((res) => {
-						console.log("post-fetch");
-						console.log("Check 2");
+		.then((response) => response.json())
+		.then((res) => {
+			console.log("post-fetch");
+			console.log("Check 2");
 
-						let city = res.results[0].address_components[3].long_name;
-						let address = res.results[0].formatted_address;
-						console.log("Here I am!");
-						// Add the location to the places table
-						fetch(`/api/places`, {
-							method: "POST",
-							body: JSON.stringify({
-								city,
-								address,
-								latitude,
-								longitude,
-							}),
-							headers: {
-								"Content-Type": "application/json",
-							},
-						})
-							.then((response) => response.json())
-							// Add the post to the database
-							.then((res) => {
-								console.log("Check 3");
-								let title = document.getElementById("title").value.trim();
-								let post_content = document.getElementById("body").value.trim();
-								let user_id = sessionStorage.getItem("id");
-								let place_id = res.id;
-								console.log(title, post_content, user_id, place_id);
-								fetch(`/api/posts`, {
-									method: "POST",
-									body: JSON.stringify({
-										title,
-										post_content,
-										user_id,
-										place_id,
-									}),
-									headers: {
-										"Content-Type": "application/json",
-									},
-								});
-							})
-							.then(() => document.location.reload());
+			let city = res.results[0].address_components[3].long_name;
+			let address = res.results[0].formatted_address;
+			console.log("Here I am!");
+			// Add the location to the places table
+			fetch(`/api/places`, {
+				method: "POST",
+				body: JSON.stringify({
+					city,
+					address,
+					latitude,
+					longitude,
+				}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+				.then((response) => response.json())
+				// Add the post to the database
+				.then((res) => {
+					console.log("Check 3");
+					let title = document.getElementById("title").value.trim();
+					let post_content = document.getElementById("body").value.trim();
+					let user_id = sessionStorage.getItem("id");
+					let place_id = res.id;
+					console.log(title, post_content, user_id, place_id);
+					fetch(`/api/posts`, {
+						method: "POST",
+						body: JSON.stringify({
+							title,
+							post_content,
+							user_id,
+							place_id,
+						}),
+						headers: {
+							"Content-Type": "application/json",
+						},
 					});
+				})
+				.then(() => document.location.reload());
+		});
 
-				// if (response.ok) {
-				// 	console.log(response);
-				// }
-			},
-			(error) => {
-				console.log(error.code);
-			}
-		);
-	} else {
-		console.log("Not Supported");
-	}
+	// if (response.ok) {
+	// 	console.log(response);
+	// }
 }
 
 addPostBtn.addEventListener("click", (event) => {

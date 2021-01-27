@@ -1,34 +1,20 @@
 let markers = [];
-
-let getLocation = () => {
-	if ("geolocation" in navigator) {
-		navigator.geolocation.getCurrentPosition(
-			(position) => {
-				let latitude = position.coords.latitude;
-				let longitude = position.coords.longitude;
-				return latitude, longitude;
-			},
-			(error) => {
-				console.log(error.code);
-			}
-		);
-	} else {
-		console.log("Not Supported");
-	}
-};
+let latitude = 0;
+let longitude = 0;
 
 function initMap() {
-	console.log("Ayy");
 	if ("geolocation" in navigator) {
+		console.log("line 6");
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
-				let latitude = position.coords.latitude;
-				let longitude = position.coords.longitude;
+				console.log(position);
+				latitude = position.coords.latitude;
+				longitude = position.coords.longitude;
 				var options = {
 					center: { lat: latitude, lng: longitude },
 					zoom: 16,
 				};
-
+				console.log(options);
 				map = new google.maps.Map(document.getElementById("map"), options);
 
 				let marker = new google.maps.Marker({
@@ -91,7 +77,8 @@ function initMap() {
 			},
 			(error) => {
 				console.log(error.code);
-			}
+			},
+			{ timeout: 5000 }
 		);
 	} else {
 		console.log("Not Supported");
@@ -132,6 +119,7 @@ function openMessage(event) {
 
 let sendMessage = (received_username, sent_id) => {
 	let message = document.getElementById("message").value.trim();
+	sent_id = sent_id.toString();
 	const response = fetch(`/api/users/name/${received_username}`)
 		.then((response) => response.json())
 		.then((res) => {
