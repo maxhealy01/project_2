@@ -4,7 +4,6 @@ var collapseList = collapseElementList.map(function (collapseEl) {
 	return new bootstrap.Collapse(collapseEl);
 });
 
-console.log(inWords(21));
 fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 	method: "GET",
 	headers: {
@@ -55,7 +54,8 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 				}
 				// Create DOM elements to display the chats
 				for (i = 0; i < convoArray.length; i++) {
-					let number = capitalizeFirstLetter(inWords(i + 1));
+					let number = capitalizeFirstLetter(inWords(i + 1)).trim();
+
 					let otherUsername = convoArray[i][0].username;
 					// Create a div for the new chat area
 					let newChat = document.createElement("div");
@@ -69,17 +69,24 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 
 					let accordionButton = document.createElement("button");
 					accordionButton.textContent = `Your messages with ${otherUsername}`;
-					accordionButton.className = "accordion-button collapsed";
+					accordionButton.className = "accordion-button";
 					accordionButton.setAttribute("type", "button");
 					accordionButton.setAttribute("data-bs-toggle", "collapse");
 					accordionButton.setAttribute("data-bs-target", `#collapse${number}`);
 					accordionButton.setAttribute("aria-expanded", "true");
+					if (i > 0) {
+						accordionButton.className = "accordion-button collapsed";
+						accordionButton.setAttribute("aria-expanded", "false");
+					}
 					accordionButton.setAttribute("aria-controls", `collapse${number}`);
 					heading.appendChild(accordionButton);
 
 					let infoDiv = document.createElement("div");
 					infoDiv.id = `collapse${number}`;
 					infoDiv.className = "accordion-collapse collapse show";
+					if (i > 0) {
+						infoDiv.className = "accordion-collapse collapse";
+					}
 					infoDiv.setAttribute("aria-labelledby", `heading${number}`);
 					infoDiv.setAttribute("data-bs-parent", "#inbox");
 					newChat.appendChild(infoDiv);
@@ -101,7 +108,7 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 						// Create DOM elements for individual messages
 						var messageText = document.createElement("p");
 						messageText.className = "message";
-						messageText.textContent = `${messageUsername} at ${time}: ${message}`;
+						messageText.textContent = `${messageUsername} on ${time}: ${message}`;
 						messageContent.appendChild(messageText);
 					}
 					// Create an area for a new message
