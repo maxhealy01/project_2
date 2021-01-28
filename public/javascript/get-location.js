@@ -1,18 +1,21 @@
 let markers = [];
-let latitude = sessionStorage.getItem("latitude");
-let longitude = sessionStorage.getItem("longitude");
+let latitude = Number(sessionStorage.getItem("latitude"));
+let longitude = Number(sessionStorage.getItem("longitude"));
+if (latitude === 0) {
+	latitude = 30.2729;
+}
+if (longitude === 0) {
+	longitude = 97.7444;
+}
 
-let getMap = (position) => {
-	console.log(position);
-	latitude = position.coords.latitude;
-	longitude = position.coords.longitude;
+function initMap() {
 	var options = {
 		enableHighAccuracy: true,
 		center: { lat: latitude, lng: longitude },
 		zoom: 16,
 	};
 	map = new google.maps.Map(document.getElementById("map"), options);
-
+	console.log(latitude, longitude, options);
 	let marker = new google.maps.Marker({
 		position: {
 			lat: latitude,
@@ -33,75 +36,46 @@ let getMap = (position) => {
 		// 	console.log(markers);
 		// })
 		.then((res) => {
-			let markers = res;
-			console.log(markers);
-			// Create a marker for each place in the DB
-			for (i = 0; i < markers.length; i++) {
-				latitude = Number(markers[i].place.latitude);
-				longitude = Number(markers[i].place.longitude);
-				let marker = new google.maps.Marker({
-					position: {
-						lat: latitude,
-						lng: longitude,
-					},
-					map: map,
-				});
-				// Format the created_at date
-				console.log(markers[i]);
-				let date = new Date(markers[i].created_at);
-				let dateString = date.toString();
-				let time = `Posted by ${markers[i].user.username} on ${dateString.slice(
-					4,
-					7
-				)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
-				// Create an info window for each marker
-				let infoWindow = new google.maps.InfoWindow({
-					content: `<h3>${markers[i].title}</h3>
-	                <p>${markers[i].post_content}</p>
-									<h5 id="time">${time}
-									<button type="submit" onclick="openMessage(event)">Message This User</button>
-	                </h5>`,
-				});
-				console.log(
-					"title",
-					markers[i].title,
-					"content",
-					markers[i].post_content,
-					"time",
-					time
-				);
-				console.log("info window created");
-
-				// Make the info window clickable
-				marker.addListener("click", function () {
-					infoWindow.open(map, marker);
-				});
-			}
+			populateMarkers(res);
 		});
-};
-
-function initMap() {
-	if ("geolocation" in navigator) {
-		console.log("line 6");
-		navigator.geolocation.getCurrentPosition(
-			getMap,
-			(error) => {
-				let position = {
-					coords: {
-						latitude: latitude,
-						longitude: longitude,
-					},
-				};
-				getMap(position);
-				console.log(error.code);
-			},
-			{ timeout: 3000 }
-		);
-	} else {
-		console.log("Not Supported");
-	}
 }
 
+function populateMarkers(markers) {
+	// Create a marker for each place in the DB
+	for (i = 0; i < markers.length; i++) {
+		// I'm adding + i * 0.0001 as a temporary failsafe. Because navigator.geolocation is not getting the correct coordinates, this enables multiple markers to be posted on the "same spot"
+		latitude = Number(markers[i].place.latitude) + i * 0.0001;
+		longitude = Number(markers[i].place.longitude) + i * 0.0001;
+		console.log(latitude, longitude);
+		let marker = new google.maps.Marker({
+			position: {
+				lat: latitude,
+				lng: longitude,
+			},
+			map: map,
+		});
+		// Format the created_at date
+		let date = new Date(markers[i].created_at);
+		let dateString = date.toString();
+		let time = `Posted by ${markers[i].user.username} on ${dateString.slice(
+			4,
+			7
+		)} ${date.getDate()} at ${date.getHours()}:${date.getMinutes()} `;
+		// Create an info window for each marker
+		let infoWindow = new google.maps.InfoWindow({
+			content: `<h5>${markers[i].title}</h5>
+	                <p>${markers[i].post_content}</p>
+									<h6 id="time">${time}
+									<button type="submit" onclick="openMessage(event)">Message This User</button>
+	                </h6>`,
+		});
+
+		// Make the info window clickable
+		marker.addListener("click", function () {
+			infoWindow.open(map, marker);
+		});
+	}
+}
 function openMessage(event) {
 	// Parse the window object to get to the poster's username
 	let button = event.target;

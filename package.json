@@ -19,6 +19,7 @@
   "homepage": "https://github.com/maxhealy01/project_2#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bootstrap": "^4.6.0",
     "connect-session-sequelize": "^7.1.0",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",

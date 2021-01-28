@@ -1,5 +1,10 @@
 let inbox = document.getElementById("inbox");
+var collapseElementList = [].slice.call(document.querySelectorAll(".collapse"));
+var collapseList = collapseElementList.map(function (collapseEl) {
+	return new bootstrap.Collapse(collapseEl);
+});
 
+console.log(inWords(21));
 fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 	method: "GET",
 	headers: {
@@ -46,24 +51,42 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 					for (j = 0; j < convoArray[i].length; j++) {
 						convoArray[i][j].username =
 							userData[convoArray[i][j].sent_id - 1].username;
-						console.log(convoArray, userData);
 					}
 				}
-
-				console.log(convoArray);
-
 				// Create DOM elements to display the chats
 				for (i = 0; i < convoArray.length; i++) {
+					let number = capitalizeFirstLetter(inWords(i + 1));
 					let otherUsername = convoArray[i][0].username;
 					// Create a div for the new chat area
 					let newChat = document.createElement("div");
-					newChat.className = "chat";
+					newChat.className = "accordion-item";
+					inbox.appendChild(newChat);
 
-					let heading = document.createElement("h3");
-					heading.textContent = `Your messages with ${otherUsername}`;
+					let heading = document.createElement("h2");
+					heading.className = "accordion-header";
+					heading.id = `heading${number}`;
 					newChat.appendChild(heading);
 
-					newChat.id = convoArray[i][0].convo_id;
+					let accordionButton = document.createElement("button");
+					accordionButton.textContent = `Your messages with ${otherUsername}`;
+					accordionButton.className = "accordion-button collapsed";
+					accordionButton.setAttribute("type", "button");
+					accordionButton.setAttribute("data-bs-toggle", "collapse");
+					accordionButton.setAttribute("data-bs-target", `#collapse${number}`);
+					accordionButton.setAttribute("aria-expanded", "true");
+					accordionButton.setAttribute("aria-controls", `collapse${number}`);
+					heading.appendChild(accordionButton);
+
+					let infoDiv = document.createElement("div");
+					infoDiv.id = `collapse${number}`;
+					infoDiv.className = "accordion-collapse collapse show";
+					infoDiv.setAttribute("aria-labelledby", `heading${number}`);
+					infoDiv.setAttribute("data-bs-parent", "#inbox");
+					newChat.appendChild(infoDiv);
+
+					let messageContent = document.createElement("div");
+					messageContent.className = "accordion-body";
+					infoDiv.append(messageContent);
 
 					for (j = 0; j < convoArray[i].length; j++) {
 						let date = new Date(convoArray[i][j].createdAt);
@@ -79,19 +102,17 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 						var messageText = document.createElement("p");
 						messageText.className = "message";
 						messageText.textContent = `${messageUsername} at ${time}: ${message}`;
-						newChat.appendChild(messageText);
+						messageContent.appendChild(messageText);
 					}
 					// Create an area for a new message
 					let messageArea = document.createElement("input");
 					messageArea.className = "messageText";
-					newChat.appendChild(messageArea);
+					messageContent.appendChild(messageArea);
 
 					let sendBtn = document.createElement("button");
 					sendBtn.setAttribute("type", "submit");
 					sendBtn.textContent = "Send Message";
-					newChat.appendChild(sendBtn);
-
-					inbox.appendChild(newChat);
+					messageContent.appendChild(sendBtn);
 
 					let convoId = convoArray[i][0].convo_id;
 					sendBtn.addEventListener("click", (event) => {

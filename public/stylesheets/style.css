@@ -2,3 +2,21 @@
 	height: 400px;
 	width: 100%;
 }
+
+nav div a,
+nav div button {
+	padding: 0 5px 0 5px;
+	text-decoration: none;
+}
+
+nav {
+	font-size: 26px;
+}
+
+.homepage-text,
+.homepage-header {
+	padding: 0 0 0 20px;
+}
+
+.homepage-header {
+}
