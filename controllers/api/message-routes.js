@@ -60,18 +60,6 @@ router.get("/:id", (req, res) => {
 			{ received_id: req.params.id },
 			{ sent_id: req.params.id }
 		),
-		// include: {
-		// 	model: User,
-		// 	as: "received_user",
-		// 	attributes: ["username"],
-		// 	where: { id: received_id },
-		// },
-		// include: {
-		// 	model: User,
-		// 	as: "sent_user",
-		// 	attributes: ["username"],
-		// 	where: { id: sent_id },
-		// },
 	})
 		.then((messages) => {
 			if (!messages) {

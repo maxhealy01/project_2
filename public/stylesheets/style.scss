@@ -4,48 +4,29 @@
 	margin-left: auto;
 	margin-right: auto;
 }
-
-body {
-	background-color: #838e83;
-	color: #64403e;
-}
-
-nav {
-	background-color: #64403e;
-}
-
-nav a {
-	color: #838e83;
-}
-
 main h1 {
 	font-family: "Petit Formal Script", cursive;
 	text-align: center;
 	padding: 20px 0 20px 0;
 }
-
 nav div a,
 nav div button {
 	padding: 0 5px 0 5px;
 	text-decoration: none;
 }
-
 nav {
 	font-size: 26px;
 }
-
 .homepage-text,
 .homepage-header {
 	padding: 0 0 0 20px;
 }
-
 #addPost {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 10px 0 10px 0;
 	width: 10%;
 }
-
 /* Post Styling */
 #postarea {
 	display: flex;
@@ -60,39 +41,24 @@ nav {
 	margin-right: auto;
 	justify-content: center;
 }
-
 #newPost #title {
 	width: 40%;
 	padding: 0 0 20px 0;
 	display: block;
 	margin: 0 auto;
 }
-
 textarea {
 	width: 30em;
 	height: 10em;
 	display: block;
 	margin: 0 auto;
 }
-
 #submitDiv {
 	width: 20%;
 	display: grid;
 	margin: 0 auto;
 	padding: 5px 0 10px 0;
 }
-
 #submitDiv button {
 	margin: auto;
-	width: 50%;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-ms-flex-flow: column wrap;
-	flex-flow: column wrap;
-	margin-left: auto;
-	margin-right: auto;
 }
-/*# sourceMappingURL=style.css.map */
