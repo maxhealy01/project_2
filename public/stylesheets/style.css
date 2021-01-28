@@ -1,6 +1,14 @@
 #map {
 	height: 400px;
-	width: 100%;
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+main h1 {
+	font-family: "Petit Formal Script", cursive;
+	text-align: center;
+	padding: 20px 0 20px 0;
 }
 
 nav div a,
@@ -19,4 +27,19 @@ nav {
 }
 
 .homepage-header {
+}
+
+#addPost {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px 0 10px 0;
+	width: 10%;
+}
+/* Post Styling */
+#newPost {
+	width: 50%;
+	display: flex;
+	flex-flow: column wrap;
+	margin-left: auto;
+	margin-right: auto;
 }

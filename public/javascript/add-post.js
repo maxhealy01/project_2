@@ -15,7 +15,7 @@ let addPost = () => {
 	newPost.appendChild(titleDiv);
 
 	// Create a body input area
-	let body = document.createElement("input");
+	let body = document.createElement("textarea");
 	body.setAttribute("type", "text");
 	body.id = "body";
 	body.placeholder = "What happened here?";
