@@ -1,45 +1,49 @@
 #map {
-	height: 400px;
-	width: 40%;
-	margin-left: auto;
-	margin-right: auto;
+  height: 400px;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 main h1 {
-	font-family: "Petit Formal Script", cursive;
-	text-align: center;
-	padding: 20px 0 20px 0;
+  font-family: "Petit Formal Script", cursive;
+  text-align: center;
+  padding: 20px 0 20px 0;
 }
 
 nav div a,
 nav div button {
-	padding: 0 5px 0 5px;
-	text-decoration: none;
+  padding: 0 5px 0 5px;
+  text-decoration: none;
 }
 
 nav {
-	font-size: 26px;
+  font-size: 26px;
 }
 
 .homepage-text,
 .homepage-header {
-	padding: 0 0 0 20px;
-}
-
-.homepage-header {
+  padding: 0 0 0 20px;
 }
 
 #addPost {
-	margin-left: auto;
-	margin-right: auto;
-	padding: 10px 0 10px 0;
-	width: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 0 10px 0;
+  width: 10%;
 }
+
 /* Post Styling */
 #newPost {
-	width: 50%;
-	display: flex;
-	flex-flow: column wrap;
-	margin-left: auto;
-	margin-right: auto;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  margin-left: auto;
+  margin-right: auto;
 }
+/*# sourceMappingURL=style.css.map */
