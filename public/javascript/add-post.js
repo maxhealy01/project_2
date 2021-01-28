@@ -8,10 +8,14 @@ let addPost = () => {
 	newPost.id = "newPost";
 
 	// Create a title input area
-	let titleDiv = document.createElement("input");
-	titleDiv.setAttribute("type", "text");
+	let titleDiv = document.createElement("div");
 	titleDiv.id = "title";
-	titleDiv.placeholder = "Title";
+
+	let titleArea = document.createElement("input");
+	titleArea.setAttribute("type", "text");
+	titleArea.placeholder = "Title";
+	titleDiv.appendChild(titleArea);
+
 	newPost.appendChild(titleDiv);
 
 	// Create a body input area
@@ -22,10 +26,14 @@ let addPost = () => {
 	newPost.appendChild(body);
 
 	// Create a button for submission
+	let submitDiv = document.createElement("div");
+	submitDiv.id = "submitDiv";
+
 	let submitBtn = document.createElement("button");
 	submitBtn.setAttribute("type", "submit");
 	submitBtn.textContent = "Submit Post";
-	newPost.appendChild(submitBtn);
+	submitDiv.appendChild(submitBtn);
+	newPost.appendChild(submitDiv);
 
 	submitBtn.addEventListener("click", (event) => {
 		event.preventDefault();

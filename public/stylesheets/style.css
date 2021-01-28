@@ -1,8 +1,8 @@
 #map {
-  height: 400px;
-  width: 40%;
-  margin-left: auto;
-  margin-right: auto;
+	height: 400px;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 main h1 {
@@ -34,16 +34,41 @@ nav {
 }
 
 /* Post Styling */
-#newPost {
-  width: 50%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: column wrap;
-          flex-flow: column wrap;
-  margin-left: auto;
-  margin-right: auto;
+#postarea {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
 }
-/*# sourceMappingURL=style.css.map */
+#newPost {
+	width: 50%;
+	display: flex;
+	flex-flow: column;
+	margin-left: auto;
+	margin-right: auto;
+	justify-content: center;
+}
+
+#newPost #title {
+	width: 40%;
+	padding: 0 0 20px 0;
+	display: block;
+	margin: 0 auto;
+}
+
+textarea {
+	width: 30em;
+	height: 10em;
+	display: block;
+	margin: 0 auto;
+}
+
+#submitDiv {
+	width: 20%;
+	display: grid;
+	margin: 0 auto;
+	padding: 5px 0 10px 0;
+}
+
+#submitDiv button {
+	margin: auto;
+}
