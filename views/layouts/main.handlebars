@@ -44,7 +44,7 @@
 
 <body>
   <div class="wrapper">
-    <nav class="navbar navbar-nav">
+    {{!-- <nav class="navbar navbar-nav">
       <div class="container-fluid justify-content-start">
         <a href="/">Here and Now</a>
         <a href="/map">Map</a>
@@ -55,6 +55,18 @@
         <a href="/login">Login</a>
         {{/if}}
       </div>
+    </nav> --}}
+    <nav class="nav nav-pills nav-justified">
+      <a class="nav-item nav-link" href="/">Here and Now</a>
+      <a class="nav-item nav-link" href="/map">Map</a>
+      {{#if loggedIn}}
+      <a class="nav-item nav-link" href="/inbox">Inbox</a>
+      <a class="nav-item nav-link">
+        <button class="nav-item nav-link" id="logout">Logout</button>
+      </a>
+      {{else}}
+      <a class="nav-item nav-link" href="/login">Login</a>
+      {{/if}}
     </nav>
     <main>
       {{{ body }}}
