@@ -3,6 +3,7 @@
 	width: 70%;
 	margin-left: auto;
 	margin-right: auto;
+	border-radius: 20px;
 }
 
 body {
@@ -14,7 +15,8 @@ nav {
 	background-color: #64403e;
 }
 
-nav a {
+nav a,
+#logout {
 	color: #838e83;
 }
 
@@ -28,15 +30,44 @@ nav div a,
 nav div button {
 	padding: 0 5px 0 5px;
 	text-decoration: none;
+	font-family: "Yusei Magic", sans-serif;
 }
 
 nav {
 	font-size: 26px;
 }
 
+#logout {
+	display: inline-block;
+	border: none;
+	margin: 0;
+	text-decoration: none;
+	background: #64403e;
+	padding: 0 0 20px 0;
+	cursor: pointer;
+	text-align: center;
+	font-size: 26px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+#homepage,
+.signup-form {
+	margin-left: auto;
+	margin-right: auto;
+	width: 65%;
+	padding: 35px 0 0 0;
+}
+
 .homepage-text,
 .homepage-header {
-	padding: 0 0 0 20px;
+	padding: 5px 0 5px 0;
+	font-family: "Yusei Magic", sans-serif;
+	text-align: center;
+}
+
+.signup-form {
+	width: 30%;
 }
 
 #addPost {
@@ -73,6 +104,14 @@ textarea {
 	height: 10em;
 	display: block;
 	margin: 0 auto;
+	color: #838e83;
+	background-color: #64403e;
+	padding: 3px 0 0 6px;
+}
+
+input {
+	color: #838e83;
+	background-color: #64403e;
 }
 
 #submitDiv {
