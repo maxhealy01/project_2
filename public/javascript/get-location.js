@@ -40,8 +40,8 @@ function populateMarkers(markers) {
 	// Create a marker for each place in the DB
 	for (i = 0; i < markers.length; i++) {
 		// I'm adding + i * 0.0001 as a temporary failsafe. Because navigator.geolocation is not getting the correct coordinates, this enables multiple markers to be posted on the "same spot"
-		latitude = Number(markers[i].place.latitude) + i * 0.0001;
-		longitude = Number(markers[i].place.longitude) + i * 0.0001;
+		latitude = Number(markers[i].place.latitude) + i * 0.00000001;
+		longitude = Number(markers[i].place.longitude) + i * 0.00000001;
 		let marker = new google.maps.Marker({
 			position: {
 				lat: latitude,
