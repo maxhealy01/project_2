@@ -9,11 +9,11 @@ let addPost = () => {
 
 	// Create a title input area
 	let titleDiv = document.createElement("div");
-	titleDiv.id = "title";
 
 	let titleArea = document.createElement("input");
 	titleArea.setAttribute("type", "text");
 	titleArea.placeholder = "Title";
+	titleArea.id = "title";
 	titleDiv.appendChild(titleArea);
 
 	newPost.appendChild(titleDiv);

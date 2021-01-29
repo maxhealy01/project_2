@@ -74,7 +74,7 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 					accordionButton.setAttribute("data-bs-toggle", "collapse");
 					accordionButton.setAttribute("data-bs-target", `#collapse${number}`);
 					accordionButton.setAttribute("aria-expanded", "true");
-					if (i > 0) {
+					if (i >= 0) {
 						accordionButton.className = "accordion-button collapsed";
 						accordionButton.setAttribute("aria-expanded", "false");
 					}
@@ -84,7 +84,7 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 					let infoDiv = document.createElement("div");
 					infoDiv.id = `collapse${number}`;
 					infoDiv.className = "accordion-collapse collapse show";
-					if (i > 0) {
+					if (i >= 0) {
 						infoDiv.className = "accordion-collapse collapse";
 					}
 					infoDiv.setAttribute("aria-labelledby", `heading${number}`);

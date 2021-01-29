@@ -31,10 +31,6 @@ function initMap() {
 		},
 	})
 		.then((response) => response.json())
-		// .then((res) => {
-		// 	let markers = res;
-		// 	console.log(markers);
-		// })
 		.then((res) => {
 			populateMarkers(res);
 		});
@@ -46,7 +42,6 @@ function populateMarkers(markers) {
 		// I'm adding + i * 0.0001 as a temporary failsafe. Because navigator.geolocation is not getting the correct coordinates, this enables multiple markers to be posted on the "same spot"
 		latitude = Number(markers[i].place.latitude) + i * 0.0001;
 		longitude = Number(markers[i].place.longitude) + i * 0.0001;
-		console.log(latitude, longitude);
 		let marker = new google.maps.Marker({
 			position: {
 				lat: latitude,

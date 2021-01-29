@@ -51,7 +51,9 @@ async function loginFormHandler(event) {
 		}
 	}
 }
-
+if (!document.querySelector(".signup-form").length) {
+	console.log("none here!");
+}
 document
 	.querySelector(".signup-form")
 	.addEventListener("submit", signupFormHandler);
