@@ -7,7 +7,8 @@
   <title>Here and Now</title>
   <script type = "text/javascript">
 
-    function showLocation(position) {
+    function showLocation() {
+      console.log(3)
       console.log(position)
       sessionStorage.setItem('latitude',position.coords.latitude);
       sessionStorage.setItem('longitude',position.coords.longitude);
@@ -24,14 +25,22 @@
     function getLocation() {
       if(navigator.geolocation) {
           // timeout at 60000 milliseconds (60 seconds)
-          var options = {timeout:60000};
-          navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+          console.log(4)
+          var options = {timeout:10000};
+          navigator.geolocation.getCurrentPosition(position => {
+            console.log(3)
+            console.log(position)
+            sessionStorage.setItem('latitude',position.coords.latitude);
+            sessionStorage.setItem('longitude',position.coords.longitude);
+          });
       } else {
           alert("Sorry, browser does not support geolocation!");
       }
     }
 
-    window.onload = getLocation()
+    window.onload = function() {
+      getLocation()
+    }
   
   </script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
