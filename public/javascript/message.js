@@ -24,7 +24,11 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 
 				// Get the username of the user whose inbox this is
 				let user_id = sessionStorage.getItem("id");
-				let username = userData[user_id - 1].username;
+				for (i = 0; i < userData.length; i++) {
+					if (userData[i].id === user_id) {
+						let username = userData[i].username;
+					}
+				}
 				console.log("First message array", messageArray);
 
 				let convoArray = [];

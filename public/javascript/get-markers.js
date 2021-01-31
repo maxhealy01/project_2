@@ -1,23 +1,28 @@
-// let getMarkers = () => {
-// 	const response = fetch("/api/places")
-// 		.then((response) => response.json())
-// 		.then((res) => {
-// 			let markers = res;
-// 			for (i = 0; i < markers.length; i++) {
-// 				let latitude = Number(markers[i].latitude);
-// 				let longitude = Number(markers[i].longitude);
-// 				console.log(typeof latitude, typeof longitude);
-// 				var marker = new google.maps.Marker({
-// 					position: {
-// 						lat: latitude,
-// 						lng: longitude,
-// 					},
-// 					map: map,
-// 				});
-// 			}
-// 		});
-// };
+function showPosition(position) {
+	console.log(3);
+	console.log(position);
+	var latitude = position.coords.latitude;
+	var longitude = position.coords.longitude;
+	alert("Latitude : " + latitude + " Longitude: " + longitude);
+}
 
-// if (map) {
-// 	getMarkers();
-// }
+function errorHandler(err) {
+	if (err.code == 1) {
+		alert("Error: Access is denied!");
+	} else if (err.code == 2) {
+		alert("Error: Position is unavailable!");
+	}
+}
+
+function getLocation() {
+	if (navigator.geolocation) {
+		console.log(4);
+		// timeout at 60000 milliseconds (60 seconds)
+		var options = { timeout: 60000 };
+		navigator.geolocation.getCurrentPosition(showPosition);
+	} else {
+		alert("Sorry, browser does not support geolocation!");
+	}
+}
+
+getLocation();
