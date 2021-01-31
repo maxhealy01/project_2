@@ -52,8 +52,12 @@ fetch(`/api/messages/${sessionStorage.getItem("id")}`, {
 				// Find the username of the user that each message pertains to
 				for (i = 0; i < convoArray.length; i++) {
 					for (j = 0; j < convoArray[i].length; j++) {
-						convoArray[i][j].username =
-							userData[convoArray[i][j].sent_id - 1].username;
+						for (x = 0; x < userData.length; x++) {
+							if (userData[x].id === convoArray[i][j].sent_id) {
+								var sent_username = userData[x].username;
+								convoArray[i][j].username = sent_username;
+							}
+						}
 					}
 				}
 				// Create DOM elements to display the chats
